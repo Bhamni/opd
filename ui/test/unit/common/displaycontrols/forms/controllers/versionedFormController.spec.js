@@ -5,7 +5,6 @@ describe('versionedFormController', function () {
         $aController, formService, appService, mockBackend, q;
 
     beforeEach(module('bahmni.common.displaycontrol.forms'));
-
     beforeEach(module('bahmni.common.displaycontrol.forms', function ($provide) {
         appService = jasmine.createSpyObj('appService', ['getAppDescriptor']);
         formService = jasmine.createSpyObj('formService', ['getAllPatientForms','getFormList']);
@@ -14,7 +13,6 @@ describe('versionedFormController', function () {
                 return true;
             }
         });
-
         $provide.value('$state', {});
         $provide.value('formService', formService);
         $provide.value('appService', appService);
@@ -26,7 +24,7 @@ describe('versionedFormController', function () {
         $aController = $controller;
         q = $q;
         scope.patient = {uuid: '123'};
-        scope.section = {dashboardConfig: {maximumNoOfVisits: 10},formGroup:[]};
+        scope.section = {dashboardConfig: {maximumNoOfVisits: 10}, formGroup: []};
         mockBackend = $httpBackend;
         mockBackend.expectGET('../common/displaycontrols/forms/views/formsTable.html').respond("<div>dummy</div>");
     }));
@@ -39,8 +37,6 @@ describe('versionedFormController', function () {
             $q: q
         })
     };
-
-
     var mockFormServiceGetAllPatientForms = function (data) {
         formService.getAllPatientForms.and.callFake(function () {
             return {
@@ -56,7 +52,6 @@ describe('versionedFormController', function () {
 
         expect(scope.getDisplayName(formData)).toEqual('Test Form');
     });
-
     it('should return translated formName when form has translations', function () {
         q = jasmine.createSpyObj('$q', ['all']);
         let allFormData = [{formName: 'Simple', encounterDateTime: '2015-12-18T17:26:31.000+0000'}, {
@@ -107,7 +102,7 @@ describe('versionedFormController', function () {
         }, {formName: 'Third', encounterDateTime: '2015-12-16T16:26:31.000+0000', privileges: []}];
         let expectedFormData = [{formName: 'First', encounterDateTime: '2015-12-18T17:26:31.000+0000', privileges: []}, {
             formName: 'Second',
-            encounterDateTime: '2015-12-18T16:26:31.000+0000',privileges: []
+            encounterDateTime: '2015-12-18T16:26:31.000+0000', privileges: []
         }];
         let data = {"data": formData};
         scope.section.formGroup = ['First', 'Second'];
@@ -183,6 +178,5 @@ describe('versionedFormController', function () {
 
         expect(actualEditObsData).toEqual(expectedEditObsData);
     });
-
 
 });
